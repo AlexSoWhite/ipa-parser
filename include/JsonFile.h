@@ -5,14 +5,14 @@
 #ifndef PARSER_JSONFILE_H
 #define PARSER_JSONFILE_H
 
-#include "../json/json.hpp"
+#include <nlohmann/json.hpp>
 #include "ConfigFile.h"
 
 class JsonFile : public ConfigFile {
     nlohmann::json data;
 public:
     JsonFile() = default;
-    void parse();
+    int parse();
     JsonFile& setData(nlohmann::json & json)
     {
         this->data = json;

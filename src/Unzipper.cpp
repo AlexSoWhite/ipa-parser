@@ -5,10 +5,15 @@
 #include "../include/Unzipper.h"
 #include <sstream>
 #include <cstdlib>
+#include "../include/utils.h"
 
 static std::string build_command(const std::string & directoryName, const std::string & tempDirectoryName) {
     std::stringstream unzip_command;
-    unzip_command << "unzip -d " << tempDirectoryName << " " << directoryName << " > unzip_log";
+    std::string _dir_name = directoryName;
+    std::string _tmp_name = tempDirectoryName;
+    normalize_spaces(_dir_name);
+    normalize_spaces(_tmp_name);
+    unzip_command << "unzip -d " << _tmp_name << " " << _dir_name << " > unzip_log";
     return unzip_command.str();
 }
 

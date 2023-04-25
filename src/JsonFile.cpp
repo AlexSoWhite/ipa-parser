@@ -3,20 +3,27 @@
 //
 
 #include <fstream>
+#include <iostream>
 #include "../include/JsonFile.h"
 
-//TODO error catching
-void JsonFile::parse() {
+int JsonFile::parse() {
     std::ifstream fin(this->path);
     if (!fin.is_open()) {
-        return;
+        return -1;
     }
     nlohmann::json j;
-    fin >> j;
+    int status = 1;
+    try {
+        fin >> j;
+        this->data = j;
+        std::ofstream fout;
+        fout.open(this->path);
+        fout << std::setw(4) << j;
+        fout.close();
+    } catch (const nlohmann::json::parse_error& e) {
+        std::cout << "error while parsing json" << std::endl;
+        status = 0;
+    }
     fin.close();
-    this->data = j;
-    std::ofstream fout;
-    fout.open(this->path);
-    fout << std::setw(4) << j;
-    fout.close();
+    return status;
 }

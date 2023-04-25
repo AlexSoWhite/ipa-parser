@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <boost/locale/encoding_utf.hpp>
+#include <algorithm>
 #include "../include/BinaryPlistParser.h"
 
 template<typename T>

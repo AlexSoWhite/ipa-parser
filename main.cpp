@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <regex>
+#include <filesystem>
 #include "include/Unzipper.h"
 #include "include/Dispatcher.h"
 #include "include/FileBundleParser.h"
@@ -22,8 +23,8 @@ int main(int argc, const char** argv) {
     }
 
     // controller
-    Dispatcher dispatcher = Dispatcher();
-    dispatcher.setTemporaryDirName("tmp");
+    std::filesystem::create_directory("tmp");
+    Dispatcher dispatcher = Dispatcher("tmp", "dispatcher_logs");
     dispatcher.extractIpaName(argv[1]);
 
     // unzip files to temporary directory

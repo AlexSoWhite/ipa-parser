@@ -11,43 +11,24 @@
 #include <utility>
 #include <vector>
 #include <memory>
+#include <fstream>
 #include <LIEF/LIEF.hpp>
-
-struct Node;
-struct DependencyGraph;
+#include <SwiftDecompiler.h>
 
 class Executable : public File {
-    std::unique_ptr<LIEF::MachO::FatBinary> macho;
+    std::unique_ptr<LIEF::MachO::FatBinary> macho_lief;
+    std::unique_ptr<Binary> binary;
+    std::vector<std::string> sym_strings;
 public:
-    Executable() = default;
-    explicit Executable(std::string);
-    int read();
+    std::vector<std::string> get_sym_strings() {
+        return sym_strings;
+    };
+    std::vector<std::string> get_strings(const std::string& grep_str) {
+        return binary->get_strings(path, grep_str);
+    }
+    int read(const std::string&, const std::string&);
     ~Executable() override = default;
 };
-
-//struct Node {
-//    Executable vertex;
-//    unsigned int idx;
-//    Node(Executable e, unsigned int i) {
-//        this->vertex = std::move(e);
-//        this->idx = i;
-//    }
-//};
-//
-//class DependencyGraph {
-//    unsigned int numVertex;
-//    std::vector<std::list<Node>> adjList;
-//public:
-//    DependencyGraph() { this->numVertex = 0; }
-//    void addEdge(Node & src, Node & dest) {
-//        adjList[src.idx].push_front(dest);
-//    }
-//    void addVertex(const Executable & e) {
-//        Node n = Node(e, numVertex);
-//        numVertex++;
-//        adjList.emplace_back(std::list<Node>(1, n));
-//    }
-//};
 
 
 #endif //PARSER_EXECUTABLE_H

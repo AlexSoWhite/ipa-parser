@@ -24,7 +24,7 @@ std::map<std::string, File::Types> FileTypeResolver::typeMap = {
 File::Types FileTypeResolver::resolve(const std::string& path) {
     std::string extension = extractExtension(path);
     if (!extension.empty()) {
-        if (typeMap.contains(extension)) {
+        if (typeMap.find(extension) != typeMap.end()) {
             return typeMap.at(extension);
         } else {
             return File::RES;

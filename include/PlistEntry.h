@@ -62,7 +62,6 @@ public:
 
     friend std::ostream & operator << (std::ostream & os, const PlistEntry & plistEntry);
 
-private:
     // actual data
     PlistEntryTypes type;
     anyEntry entry;
